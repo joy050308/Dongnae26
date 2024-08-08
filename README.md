@@ -8,8 +8,8 @@
 
 
 팀
-|이름|부서||
-|---|---|---|
+|이름|부서|
+|---|---|
 | 임지환 | 한국정보교육원 |
 | 부철용 | 한국정보교육원 |
 | 이윤민 | 한국정보교육원 |
@@ -18,76 +18,27 @@
 
 
 
-<img src="./image/generator.JPG" width="650" height="300">
-<img src="./image/Discriminator.jpg" width="650" height="300">
+## 주요 기능 & 기술
 
-위에서 정의한 2가지 모델을 다음과 같은 구조로 경쟁을 하며 네트워크의 성능 발전을 시키고자 한다.
+### REST API를 통한 소셜 로그인 기능
+- 카카오, 구글, 네이버 소셜 로그인 기능 구현
 
-##  Method
-### Data
+### 정책, 채용정보, 문화행사 게시판 구현 
+- 공공데이터 기반 API를 이용한 각종 게시판 시스템 구현
 
-- 각 Team 모델학습에 사용한 데이터
-    |Model|학습데이터|
-    |---|---|
-    |Team A | Real Face 52600장 |
-    |Team B| Real Face 15000장 / Fake Face 15000|
+### 검색 및 페이징
+- 게시판 페이징 기능 및 카테고리를 이용한 검색 기능 구현
 
------
-## GAN-Model
------
- - 사람얼굴을 비지도 학습을 통하여 가짜얼굴(Deepfake)를 생성하는 적대적 신경망 구조
- - GAN 구조
+### 북마크
+- 저장하고 싶은 게시글 북마크기능
 
-#### Network Structure
+### 프론트엔드
+- HTML, CSS, JavaScript 및 Bootstrap을 사용한 반응형 웹 디자인
 
-<div display="inlie-block">
-<center><img뭐시기>
-</div>
+### 백엔드
+- Spring 기반의 웹 서버를 구성 및 운영 가능
 
-GAN은 DCGAN구조를 참고하여 구현하였다.
-GAN (Generative Adversarial Network)은 딥러닝 모델 중 이미지 생성에 널리 쓰이는 모델이다. 기본적인 딥러닝 모델인 CNN (Convolutional Neural Network)은 이미지에서 개인지 고양이인지 구분하는 이미지 분류 (image classification) 문제에 널리 쓰이고 있다. GAN은 CNN과 달리 개는 라벨 0이 하고, 고양이는 라벨 1이라하는 것 처럼 진행하는 이미지 분류 문제보다 더 복잡하다. GAN 모델이 데이터셋과 유사한 이미지를 만들도록 하는 것이다.
-
-
-GAN은 Generator (생성자)와 Discriminator (판별자) 두 개의 모델이 동시에 적대적인 과정으로 학습한다. 생성자 G는 실제 데이터 분포를 학습하고, 판별자 D는 원래의 데이터인지 생성자로부터 생성이 된 것인지 구분한다. 생성자 G의 학습 과정은 이미지를 잘 생성해서 속일 확률을 높이고 판별자 D가 제대로 구분하는 확률을 높이는 과정이라고 볼 수 있다.
-
-본 실험에서 사용한 DCGAN의 Generator의 구조는 Random-Noise를 Input으로 넣으면 최종 출력 이미지는 64X64크기로 출력 된다.
-
-DCGAN의 Discriminator의 구조는 64X64크기의 이미지를 입력 받아 True와 False의 결과를 출력한다.
-
-활성화함수로는 아래 그림에서 확인할 수 있듯이 LeakyReLU를 사용한다. LeakyReLU는 기존 ReLU와 달리 음수영역의 값을 버리지 않고 가져온다.
-
-## CNN-Model
------
- - real/fake로 이진분류를 통해 GAN모델에서 만든 가짜얼굴(Deepfake)을 판별하는 모델 구조
- - Binary Classification
-
-#### NetWork Structure
-
-<div display="inlie-block">
-<center><img뭐시기>
-</div>
-
- - CNN(Convolutional Neural Network)
-Fully Connected Layer 만으로 구성된 인공 신경망의 입력 데이터는 1차원(배열) 형태로 한정된다. 한 장의 컬러 사진은 3차원 데이터이다. 배치 모드에 사용되는 여러장의 사진은 4차원 데이터이다. 사진 데이터로 전연결(FC, Fully Connected) 신경망을 학습시켜야 할 경우에, 3차원 사진 데이터를 1차원으로 평면화시켜야 한다. 사진 데이터를 평면화 시키는 과정에서 공간 정보가 손실될 수밖에 없다. 결과적으로 이미지 공간 정보 유실로 인한 정보 부족으로 인공 신경망이 특징을 추출 및 학습이 비효율적이고 정확도를 높이는데 한계가 있고, 이미지의 공간 정보를 유지한 상태로 학습이 가능한 모델이 바로 CNN(Convolutional Neural Network) 이다.
-
-
- -Binary Classification
-딥러닝에서 말하는 Binary Classification은 구분하고자 하는 결과 값이 2가지인 경우, 예를 들면 고양이/개를 분류하는 것과 같다. CNN이란 Convolutional Neural Network에서 이미지나 영상과 같은 데이터를 처리하는 방법이다. 본 프로젝트에서는 CNN을 사용해 2가지 label을 가진 데이터를 분류를 하고자 하였고, GAN 네트워크를 통해 만들어낸 Deepfake와 실제 사람 얼굴을 5:5비율로 맞추어 경쟁을 하며 accuracy의 값이 0.5이상일 경우 TeamB의 알고리즘이 더 잘 인식하는 것으로 판정한다.
-
-
-### Output
- - GAN을 이용한 가짜 사람 얼굴(Deepfake) 데이터 생성 과정 및 결과
-<center><img src="./VisualizeFake/FakeFaceAnimation.gif" width="200" height="200" display="inline-block"></img></center>
-
------
-
-## Result
-본 프로젝트에서는 실제 데이터와 GAN 모델을 통해 생성한 Deepfake데이터를 다른 데이터로 학습한 CNN Classification 모델의 Test셋으로 하여 더욱 잘 속이고, 더욱 잘 판별하는 두가지의 네트워크의 구현을 해보았다.
-여러번의 실험을 통해 나온 정확도
-1. 0.532... -> TeamB 승
-2. 0.434... -> TeamA 승
-.....
-
-육안으로 봤을 때는 Deepfake의 성능이 안좋아 보일 수 있지만, 컴퓨터가 인식하지 못하는 데이터를 생성하고 발전하였다.
+### 데이터베이스
+- MySQL을 사용한 데이터 관리
 
 
